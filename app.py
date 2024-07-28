@@ -15,7 +15,7 @@ def recommend_recipes(ingredients):
     ingredients_vec = vectorizer.transform([' '.join(ingredients)])
     similarities = cosine_similarity(ingredients_vec, X_train_vec).flatten()
     indices = similarities.argsort()[-3:][::-1]  # Get top 3 recipes
-    return train_data.iloc[indices][['recipe_name']]
+    return train_data.iloc[indices][['Title', 'Instructions', 'Image_Name']]
 
 # Streamlit app
 st.title('PantryPal: Ingredient-Based Recipe Recommendation System')
@@ -29,6 +29,8 @@ if st.button('Get Recipes'):
         recommended_recipes = recommend_recipes(ingredients_list)
         st.write("Recommended Recipes:")
         for index, row in recommended_recipes.iterrows():
-            st.write(f"- {row['recipe_name']}")
+            st.write(f"### {row['Title']}")
+            st.write(f"**Instructions:** {row['Instructions']}")
+            st.image(f"D:\MY PC DATA\Desktop\My Projects\PantryPal-Ingredient-Based-Recipes-Recommender\dataset\Food Images\Food Images\{row['Image_Name']}", use_column_width=True)
     else:
         st.write("Please enter some ingredients.")
