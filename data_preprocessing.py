@@ -27,6 +27,9 @@ data.dropna(subset=['Ingredients', 'Cleaned_Ingredients'], inplace=True)
 # Convert ingredient lists to a single string
 data['Cleaned_Ingredients'] = data['Cleaned_Ingredients'].apply(lambda x: ' '.join(eval(x)))
 
+# Ensure all ingredients are strings
+data['Cleaned_Ingredients'] = data['Cleaned_Ingredients'].astype(str).apply(lambda x: x.strip())
+
 # Split data into training and testing sets
 X = data['Cleaned_Ingredients']
 y = data['Title']
